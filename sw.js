@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abqarieno-v4'; // Update: Force refresh
+const CACHE_NAME = 'abqarieno-v5'; // Update: Removed update toast logic
 const ASSETS = [
     './',
     './index.html',
@@ -35,13 +35,6 @@ self.addEventListener('activate', (e) => {
             }));
         }).then(() => self.clients.claim()) // السيطرة على الصفحات المفتوحة فوراً
     );
-});
-
-// الاستجابة لرسالة التحديث الفوري
-self.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'SKIP_WAITING') {
-        self.skipWaiting();
-    }
 });
 
 // Stale-While-Revalidate Strategy
