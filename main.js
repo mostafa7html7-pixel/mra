@@ -16,7 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (menuBtn && navLinks) {
         menuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            menuBtn.innerHTML = navLinks.classList.contains('active') ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
+            const icon = menuBtn.querySelector('i');
+            if (icon) {
+                // Toggling classes on the existing icon is more performant than re-writing innerHTML.
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.replace('fa-bars', 'fa-xmark');
+                } else {
+                    icon.classList.replace('fa-xmark', 'fa-bars');
+                }
+            }
         });
     }
 
@@ -61,7 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.toggle('light-mode');
             const isLight = body.classList.contains('light-mode');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+            // Use classList.replace for safer and more consistent class manipulation
+            if (isLight) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+            }
         });
     }
 
@@ -76,37 +89,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const animatedElements = document.querySelectorAll('.scroll-animate');
     animatedElements.forEach((el) => observer.observe(el));
-
-    // 6. Service Worker Update Notification
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').then(reg => {
-            reg.onupdatefound = () => {
-                const installingWorker = reg.installing;
-                installingWorker.onstatechange = () => {
-                    if (installingWorker.state === 'installed') {
-                        if (navigator.serviceWorker.controller) {
-                            // At this point, the old content is still being served and
-                            // the new content is available for the next load.
-                            // We can show a "New content is available; please refresh." toast.
-                            showUpdateToast(reg);
-                        }
-                    }
-                };
-            };
-        }).catch(error => {
-            console.error('Service Worker registration failed:', error);
-        });
-    }
-
-    function showUpdateToast(registration) {
-        const updateToast = document.getElementById('update-toast');
-        const reloadButton = document.getElementById('reload-button');
-        if (updateToast && reloadButton) {
-            updateToast.classList.add('show');
-            reloadButton.onclick = () => {
-                registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-                window.location.reload();
-            };
-        }
-    }
 });

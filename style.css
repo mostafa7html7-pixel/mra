@@ -50,7 +50,6 @@ body, button, input, textarea, select {
 }
 
 body { background-color: var(--bg-color); color: var(--text-white); direction: rtl; }
-body.light-mode { background-color: var(--bg-color); color: var(--text-white); }
 a { text-decoration: none; color: inherit; transition: 0.3s; }
 ul { list-style: none; }
 
@@ -310,12 +309,6 @@ body.light-mode .navbar:hover { background-color: rgba(255, 255, 255, 0.95); }
     background-image: linear-gradient(rgba(2, 2, 2, 0.7), rgba(2, 2, 2, 0.9)), url('https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=1920&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
-}
-
-.hero::before {
-    height: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)), url('6.jpeg');
-    animation: kenburns-blur 25s linear infinite alternate;
 }
 
 .schedule-container {
@@ -654,13 +647,6 @@ footer {
         align-items: center;
     }
     
-    .hero-text {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
     .doctor-img {
         max-height: 55vh; /* تكبير الصورة في الموبايل أيضاً */
         margin-bottom: 20px;
@@ -750,6 +736,7 @@ footer {
 @keyframes glow-pulse {
     from { box-shadow: 0 0 5px var(--neon-green); }
     to { box-shadow: 0 0 25px var(--neon-green), 0 0 10px #fff; }
+}
 
 .news-modal-overlay {
     position: fixed; 
