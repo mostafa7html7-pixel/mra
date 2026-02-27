@@ -287,6 +287,8 @@
             const msg = snapshot.val();
             if(msg.timestamp > loadTime) {
                 notif.classList.add('show');
+                // تحديث حالة القراءة فوراً لأن المستخدم شاهد التنبيه
+                localStorage.setItem('biology_last_seen_news', msg.timestamp);
                 setTimeout(() => notif.classList.remove('show'), 6000);
                 if(contactLink) contactLink.classList.add('has-new');
             }
